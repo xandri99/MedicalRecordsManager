@@ -13,5 +13,5 @@ class DBManager:
         connection = sqlite3.connect(path)
         self.cursor = connection.cursor()
 
-    def newPatient(self, name, surname, birthday, id):
-        self.cursor.execute("INSERT INTO Patients VALUES ('" + name + "','"+ surname +"','" + birthday + "'," +  1)")
+    def newPatient(self, name, surname, birthday, db_id):
+        self.cursor.execute("INSERT INTO Patients VALUES ('" + name + "','" + surname + "','" + birthday + "','" + str(db_id) + "')")
