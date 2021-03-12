@@ -14,4 +14,6 @@ class DBManager:
         self.cursor = connection.cursor()
 
     def newPatient(self, name, surname, birthday, db_id):
-        self.cursor.execute("INSERT INTO Patients VALUES ('" + name + "','" + surname + "','" + birthday + "','" + str(db_id) + "')")
+        # self.cursor.execute("INSERT INTO Patients VALUES ('" + name + "','" + surname + "','" + birthday + "','" + str(db_id) + "')") DO NOT DO THIS! THIS IS INSECURE!
+        patient = (name, surname, birthday, db_id)
+        self.cursor.execute("INSERT INTO Patients VALUES (?,?,?,?)", patient)
