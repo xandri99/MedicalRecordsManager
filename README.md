@@ -4,7 +4,7 @@
 **To do list:**
 ---
 
-***1. Medical Form***
+1. Medical Form
 
     - [x] Graphic interface.
         - [ ] Fields must still be added according to the template provided.
