@@ -17,16 +17,16 @@
         - [ ] Allow closing the form without closing the program.
         - [ ] Resize the entire window without losing usability.
 
-***2. Start Menu.***
+2. Start Menu.
 
     - [x] Graphic interface.
     - [ ] Functional buttons that link with the other interfaces.
     - [ ] Add automatic opening in case of closing the other interfaces.
 
-***3. Statistics***
+3. Statistics
 
-    - [ ] 
+    - [ ] To be defined.
  
-***4. Synchronization module***
+4. Synchronization module
 
-    - [ ] 
+    - [ ] To be defined.
