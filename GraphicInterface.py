@@ -165,6 +165,7 @@ class StatisticsLayout(QWidget):
         super().__init__()
 
         self.setWindowTitle("Statistics Section")
+        #self.center()
     
         self.return_button = QPushButton("Close window")
         self.return_button.clicked.connect(self.close)
@@ -174,6 +175,19 @@ class StatisticsLayout(QWidget):
         layout.addWidget(self.label)
         layout.addRow(self.return_button)
         self.setLayout(layout)
+    
+    def center(self):
+        # geometry of the main window
+        qr = self.frameGeometry()
+
+        # center point of screen
+        cp = QDesktopWidget().availableGeometry().center()
+
+        # move rectangle's center point to screen's center point
+        qr.moveCenter(cp)
+
+        # top left of rectangle becomes top left of window centering it
+        self.move(qr.topLeft())
         
 class ServerSynchronizationLayout(QWidget):
 
@@ -181,6 +195,7 @@ class ServerSynchronizationLayout(QWidget):
         super().__init__()
 
         self.setWindowTitle("Server Synchronization Section")
+        #self.center()
     
         self.return_button = QPushButton("Close window")
         self.return_button.clicked.connect(self.close)
@@ -190,6 +205,20 @@ class ServerSynchronizationLayout(QWidget):
         layout.addWidget(self.label)
         layout.addRow(self.return_button)
         self.setLayout(layout)
+
+
+    def center(self):
+        # geometry of the main window
+        qr = self.frameGeometry()
+
+        # center point of screen
+        cp = QDesktopWidget().availableGeometry().center()
+
+        # move rectangle's center point to screen's center point
+        qr.moveCenter(cp)
+
+        # top left of rectangle becomes top left of window centering it
+        self.move(qr.topLeft())
 
 
 
