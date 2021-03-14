@@ -16,7 +16,7 @@
 
 
     - [ ] Glitches
-        - [ ] Allow closing the form without closing the program.
+        - [x] Allow closing the form without closing the program.
         - [ ] Resize the entire window without losing usability.
 
 
