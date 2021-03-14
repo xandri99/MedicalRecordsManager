@@ -23,8 +23,9 @@
 2. Start Menu.
 
     - [x] Graphic interface.
-    - [ ] Functional buttons that link with the other interfaces.
-    - [ ] Add automatic opening in case of closing the other interfaces.
+    - [x] Functional buttons that link with the other interfaces.
+    - [x] Add automatic opening in case of closing the other interfaces.
+    - [ ] Option to choose the language
 
 
 3. Statistics
