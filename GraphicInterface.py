@@ -24,7 +24,7 @@ class StartMenuLayout(QMainWindow):
         # Title and size of the Main Window
         self.setWindowTitle("Medical Records Manager")
         self.resize(370, 200)
-        #self.center()
+        self.center()
         
         
         # Create a QVBoxLayout instance
@@ -80,7 +80,7 @@ class MedicalFormLayout(QWidget):
         
         # Title and size of the Main Window and Center it
         self.setWindowTitle("Medical Form")
-        #self.center()
+        self.center()
         
         # LOGICAL & INTERACTABLE ELEMENTS______________________________________
         # List of options to choose in the Patology field.
@@ -165,7 +165,7 @@ class StatisticsLayout(QWidget):
         super().__init__()
 
         self.setWindowTitle("Statistics Section")
-        #self.center()
+        self.center()
     
         self.return_button = QPushButton("Close window")
         self.return_button.clicked.connect(self.close)
@@ -195,7 +195,7 @@ class ServerSynchronizationLayout(QWidget):
         super().__init__()
 
         self.setWindowTitle("Server Synchronization Section")
-        #self.center()
+        self.center()
     
         self.return_button = QPushButton("Close window")
         self.return_button.clicked.connect(self.close)
