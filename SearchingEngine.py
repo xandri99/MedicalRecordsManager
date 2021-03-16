@@ -17,7 +17,7 @@ def moveToDirectory(directory):
 class ReadDatabase():
 
     def __init__(self):
-        self.full_data = {} 
+        self.full_DB = {} 
         self.name_list = []
             
 
@@ -34,5 +34,24 @@ class ReadDatabase():
                     raw = elem.split(':')
                     patient.append(raw[1] if len(raw) > 1 else '')
                     
-                self.full_data[patient[0] + ' ' + patient[1]] = patient
+                self.full_DB[patient[0] + ' ' + patient[1]] = patient
                 self.name_list.append(patient[0] + ' ' + patient[1])
+
+
+    def getFormatedPacientRecord(self, pacient):
+        formated_record = ("Full Name: \t" + self.full_DB[pacient][0] + " " + self.full_DB[pacient][1] + "\n" + 
+                            "Birthday: \t\t" + self.full_DB[pacient][2] + "\n" + 
+                            "Address: \t\t" + self.full_DB[pacient][3] + "\n" + 
+                            "Patology: \t" + self.full_DB[pacient][4] + "\n" + 
+                            "Comments: \t" + self.full_DB[pacient][5] + "\n"
+                            )
+        return formated_record
+        
+        
+            
+            
+        
+        
+        
+a = ReadDatabase()
+a.readtxtDataBase()

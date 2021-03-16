@@ -141,8 +141,9 @@ class MedicalFormLayout(QWidget):
         self.save_button.setEnabled(False)
         self.save_button.clicked.connect(self.saveMedicalFormData)
         self.save_button.clicked.connect(self.close)
-        
-        
+        # Go back button
+        self.return_button = QPushButton("Go back to Start Menu")
+        self.return_button.clicked.connect(self.close)
         
         # LAYOUT ELEMENTS______________________________________________________
         #The fields are declared in the layout, ordered and sentenced to be visible.
@@ -155,6 +156,7 @@ class MedicalFormLayout(QWidget):
         layout.addRow('Patology', self.Patology)
         layout.addRow('Comments', self.Comments)
         layout.addRow(self.save_button)
+        layout.addRow(self.return_button)
         self.setLayout(layout)
 
 
@@ -213,7 +215,7 @@ class SearchingEngineLayout(QMainWindow):
         # Iterate the names, creating a new search result for each
 
         for name in widget_names:
-            item = SearchResult(name)
+            item = SearchResult(name, database)
             self.controlsLayout.addWidget(item)
             self.widgets.append(item)
 
@@ -234,10 +236,14 @@ class SearchingEngineLayout(QMainWindow):
         self.searchbar = QLineEdit()
         self.searchbar.textChanged.connect(self.updateDisplay)
 
-        # Adding Completer.
+        # Completer.
         self.completer = QCompleter(widget_names)
         self.completer.setCaseSensitivity(Qt.CaseInsensitive)
         self.searchbar.setCompleter(self.completer)
+        
+        # Close button.
+        self.return_button = QPushButton("Go back to Start Menu")
+        self.return_button.clicked.connect(self.close)
 
         # Add the items to VBoxLayout (applied to container widget)
         # which encompasses the whole window.
@@ -246,6 +252,7 @@ class SearchingEngineLayout(QMainWindow):
         containerLayout.addWidget(self.label)
         containerLayout.addWidget(self.searchbar)
         containerLayout.addWidget(self.scroll)
+        containerLayout.addWidget(self.return_button)
 
         container.setLayout(containerLayout)
         self.setCentralWidget(container)
@@ -264,9 +271,9 @@ class SearchingEngineLayout(QMainWindow):
 
 class SearchResult(QWidget):
 
-    def __init__(self, name):
+    def __init__(self, name, database_object):
         super(SearchResult, self).__init__()
-
+        self.database = database_object
         self.name = name
         self.is_on = False
 
@@ -297,7 +304,7 @@ class SearchResult(QWidget):
             w.setVisible(False)
 
     def editPatientRecord(self):
-        print("Still not implemented.")
+        print("Still not implemented.\nThe implementation depends on how the database is structured and how you decide to organize the saving of files. ")
 
     def readFullRecord(self):
         self.is_on = not self.is_on
@@ -307,8 +314,12 @@ class SearchResult(QWidget):
 
         if self.is_on == True:
             self.show_more_btn.setStyleSheet("background-color: #4CAF50; color: #fff;")
+            
+            self.content.setText(self.database.getFormatedPacientRecord(self.name))
+            
         else:
             self.show_more_btn.setStyleSheet("background-color: none; color: none;")
+            self.content.setText(self.name)
 
 
 class SearchEngineController():
@@ -383,9 +394,63 @@ class ServerSynchronizationLayout(QWidget):
 
 
 
+
+class LayoutManager():
+    def __init__(self):
+        app = QApplication(sys.argv)
+        self.w1 = StartMenuLayout()
+        
+        self.w1.medical_forms_button.clicked.connect(self.launchMedicalFormLayout)
+        self.w1.searching_engine_button.clicked.connect(self.launchSearchingEngineLayout)
+        self.w1.statistics_button.clicked.connect(self.launchStatisticsLayout)
+        self.w1.server_synchronization_button.clicked.connect(self.launchStatisticsLayout)
+        
+        self.w1.show()
+        sys.exit(app.exec_())
+    
+    
+    def launchMedicalFormLayout(self):
+
+        self.w2 = MedicalFormLayout()
+        self.w2.show()
+        self.w2.save_button.clicked.connect(self.w1.show)
+        self.w2.return_button.clicked.connect(self.w1.show)
+        
+    
+    
+    def launchSearchingEngineLayout(self):
+        
+        self.w3 = SearchingEngineLayout()
+        self.w3.show()
+        self.w3.return_button.clicked.connect(self.w1.show)
+    
+    
+    def launchStatisticsLayout(self):
+        
+        self.w4 = StatisticsLayout()
+        self.w4.show()
+        self.w4.return_button.clicked.connect(self.w1.show)
+    
+    
+    def launchStatisticsLayout(self):
+        
+        self.w4 = ServerSynchronizationLayout()
+        self.w4.show()
+        self.w4.return_button.clicked.connect(self.w1.show)
+        
+
+
+if __name__ == "__main__":
+    app = LayoutManager()
+
+
+
+
+# Working but w/ updatable layouts. Static interface.
+"""
 if __name__ == "__main__":
     
-    """
+    
     El motivo de que tanto la pestaña para introducir un nuevo paciente como el buscador
     no se actualicen al cerrar la pestaña, sino que esten con los mismos datos desde el 
     inicio puede ser por como esta escrito el main. Todas las layouts estan cargadas en 
@@ -398,7 +463,7 @@ if __name__ == "__main__":
         2. Cuando vas a añadir un segundo paciente, los datos del introducido primero estan
         ahi.
             --> Solucion pocha: Hacer que se borren todos los QLineEdit por codigo y skrr xd.
-    """    
+
 
     app = QApplication(sys.argv)
     
@@ -421,4 +486,4 @@ if __name__ == "__main__":
     
     w1.show()
     sys.exit(app.exec_())
-
+"""
