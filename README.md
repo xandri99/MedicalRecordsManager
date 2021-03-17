@@ -12,8 +12,8 @@
         - [x] Saved in a .txt following the structure of a DataFrame.
         - [x] Checking if the patinent already exists or if it's a new patient.
             - [x] Solve synchronization problems with the database.
-        - [ ] Implement a way to update patient records. (It depends on how the database is implemented)
-        - [ ] Save it to a SQL database.
+        - [x] Implement a way to update patient records. (It depends on how the database is implemented)
+        - [x] Save it to a SQLite database.
 
 
     - [ ] Glitches
