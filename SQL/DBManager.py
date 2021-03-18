@@ -46,6 +46,14 @@ class DBManager:
             print(p)
         #Return patients
 
+    def get_all_db_names(self):
+        self.cursor.execute("SELECT name FROM Patients")
+        p_list =self.cursor.fetchall()
+        names = []
+        for p in p_list:
+            names.append(p[0])
+        return names
+
     def get_patient_by_id(self, patient_id):
         self.cursor.execute("SELECT * FROM Patients WHERE patient_id = ?", str(patient_id))
         patient = self.cursor.fetchall()
@@ -58,7 +66,7 @@ class DBManager:
         self.connection.commit()
 
     def delete_record(self, patient_id):
-        self.cursor.execute("DELETE FROM Patients WHERE patient_id = ?;", str(patient_id))
+        self.cursor.execute("DELETE FROM Patients WHERE patient_id = ?;", patient_id)
         self.connection.commit()
 
     def close(self):
