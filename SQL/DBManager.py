@@ -45,7 +45,7 @@ class DBManager:
         #for p in patients:
         #    print(p)
         #Return patients
-        return self.cursor.fetchall()
+        return self.cursor.fetchall() # Lista de tuplas
 
     def get_all_db_names(self):
         self.cursor.execute("SELECT name FROM Patients")
@@ -60,7 +60,7 @@ class DBManager:
         #patient = self.cursor.fetchall()
         #print(patient)
         #Return patient
-        return self.cursor.fetchall()
+        return self.cursor.fetchall() # Lista con 1 tupla
 
     def update_patient_by_id(self, patient_id, name, birthday, gender, town, phone, pathologies, comments):
         patient = (patient_id, name, birthday, gender, town, phone, pathologies, comments)
