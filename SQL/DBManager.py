@@ -40,12 +40,12 @@ class DBManager:
 
     def search_patient_by_name(self, name):
         self.cursor.execute("SELECT * FROM Patients WHERE name LIKE (?)", ('%'+name+'%',))
-        patients = self.cursor.fetchall()
+        #patients = self.cursor.fetchall()
         #print("Search for: " + name)
         #for p in patients:
         #    print(p)
         #Return patients
-        return self.cursor.fetchall() # Lista of tuples
+        return self.cursor.fetchall() # List of tuples
 
     def get_all_db_names(self):
         self.cursor.execute("SELECT name FROM Patients")
@@ -60,7 +60,7 @@ class DBManager:
         #patient = self.cursor.fetchall()
         #print(patient)
         #Return patient
-        return self.cursor.fetchall() # Lista with 1 tuple
+        return self.cursor.fetchall() # List with 1 tuple
 
     def update_patient_by_id(self, patient_id, name, birthday, gender, town, phone, pathologies, comments):
         patient = (patient_id, name, birthday, gender, town, phone, pathologies, comments)

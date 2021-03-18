@@ -11,7 +11,7 @@ db.search_patient_by_name("name")
 
 db.update_patient_by_id("2", "Sample name", "2021-03-17", "Male", "Barcelona", "763857", "Nada", "Bien")
 
-db.search_patient_by_name("sample")
+print(db.search_patient_by_name("name"))
 
 db.search_patient_by_name("")
 
