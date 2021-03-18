@@ -41,10 +41,11 @@ class DBManager:
     def search_patient_by_name(self, name):
         self.cursor.execute("SELECT * FROM Patients WHERE name LIKE (?)", ('%'+name+'%',))
         patients = self.cursor.fetchall()
-        print("Search for: " + name)
-        for p in patients:
-            print(p)
+        #print("Search for: " + name)
+        #for p in patients:
+        #    print(p)
         #Return patients
+        return self.cursor.fetchall()
 
     def get_all_db_names(self):
         self.cursor.execute("SELECT name FROM Patients")
@@ -56,9 +57,10 @@ class DBManager:
 
     def get_patient_by_id(self, patient_id):
         self.cursor.execute("SELECT * FROM Patients WHERE patient_id = ?", str(patient_id))
-        patient = self.cursor.fetchall()
-        print(patient)
+        #patient = self.cursor.fetchall()
+        #print(patient)
         #Return patient
+        return self.cursor.fetchall()
 
     def update_patient_by_id(self, patient_id, name, birthday, gender, town, phone, pathologies, comments):
         patient = (patient_id, name, birthday, gender, town, phone, pathologies, comments)
