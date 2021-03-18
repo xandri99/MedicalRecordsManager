@@ -44,6 +44,13 @@ class DBManager:
         print("Search for: " + name)
         for p in patients:
             print(p)
+        #Return patients
+
+    def get_patient_by_id(self, patient_id):
+        self.cursor.execute("SELECT * FROM Patients WHERE patient_id = ?", str(patient_id))
+        patient = self.cursor.fetchall()
+        print(patient)
+        #Return patient
 
     def update_patient_by_id(self, patient_id, name, birthday, gender, town, phone, pathologies, comments):
         patient = (patient_id, name, birthday, gender, town, phone, pathologies, comments)
