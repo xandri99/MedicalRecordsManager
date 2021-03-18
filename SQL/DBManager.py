@@ -6,10 +6,10 @@ import sqlite3
 #       - patient_id (string, unique)
 #       - name (string)
 #       - birthday (string)
-#       - gender (integer)
+#       - gender (string)
 #       - town (string)
 #       - phone (string)
-#       - pathologies (string for the time being)
+#       - pathologies (string)
 #       - comments (string)
 #
 # It can be created with:
@@ -17,7 +17,7 @@ import sqlite3
 #         "patient_id"	TEXT UNIQUE,
 #         "name"	TEXT,
 #         "birthday"	TEXT,
-#         "gender"	NUMERIC,
+#         "gender"	TEXT,
 #         "town"	TEXT,
 #         "phone"	TEXT,
 #         "pathologies"	TEXT,
