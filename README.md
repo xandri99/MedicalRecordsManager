@@ -14,6 +14,7 @@
             - [x] Solve synchronization problems with the database.
         - [x] Implement a way to update patient records. (It depends on how the database is implemented)
         - [x] Save it to a SQLite database.
+            - [x] Merge between database and graphical interface done correctly --> V2.0
 
 
     - [ ] Glitches
