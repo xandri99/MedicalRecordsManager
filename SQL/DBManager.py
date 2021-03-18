@@ -3,7 +3,7 @@ import sqlite3
 
 # DB Manager class. The database used has one table:
 #   - Patients, with several fields:
-#       - patient_id (int, unique)
+#       - patient_id (string, unique)
 #       - name (string)
 #       - birthday (string)
 #       - gender (integer)
@@ -14,7 +14,7 @@ import sqlite3
 #
 # It can be created with:
 #     CREATE TABLE "Patients" (
-#         "patient_id"	INTEGER UNIQUE,
+#         "patient_id"	TEXT UNIQUE,
 #         "name"	TEXT,
 #         "birthday"	TEXT,
 #         "gender"	NUMERIC,
@@ -22,7 +22,7 @@ import sqlite3
 #         "phone"	TEXT,
 #         "pathologies"	TEXT,
 #         "comments"	TEXT,
-#         PRIMARY KEY("patient_id" AUTOINCREMENT?)
+#         PRIMARY KEY("patient_id")
 #     );
 
 class DBManager:
