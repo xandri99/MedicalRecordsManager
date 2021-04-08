@@ -1,5 +1,6 @@
 import sys
 
+from PyQt5.QtWidgets import QApplication, QWidget, QPushButton, QHBoxLayout, QGroupBox, QDialog, QVBoxLayout, QGridLayout
 from PyQt5.Qt import *
 from functools import partial
 from PyQt5.QtCore import QSize
@@ -167,9 +168,19 @@ class MainWindow(QWidget):
         
         a = QLabel('Top \n Left' , self )
         b = QLabel('Bot \n Left' , self )         
+        
         # Layout
+        layout = QHBoxLayout()
         grid_layout = QGridLayout()
-        self.setLayout(grid_layout)
+        save_layout = QVBoxLayout()
+        
+        layout.addLayout(grid_layout)
+        layout.addLayout(save_layout)
+        
+        
+        self.setLayout(layout)
+
+
         
         grid_layout.addWidget(a, 1,1)
         grid_layout.addWidget(self.b1, 1,2)
@@ -205,7 +216,7 @@ class MainWindow(QWidget):
         grid_layout.addWidget(self.b30, 2,15)
         grid_layout.addWidget(self.b31, 2,16)
         grid_layout.addWidget(self.b32, 2,17)
-        grid_layout.addWidget(self.saveButton, 3,8)
+        layout.addWidget(self.saveButton)
         
         self.group.buttonClicked.connect(self.check_button)                 # +++
         self.saveButton.clicked.connect(self.saveData)
@@ -234,6 +245,6 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = MainWindow()
     window.setFixedSize(1293, 524)
-    window.aspect_ratio = 1
+    #window.fixed_aspect_ratio = 16
     window.show()
     app.exec_()
