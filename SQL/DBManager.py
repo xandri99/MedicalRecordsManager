@@ -1,41 +1,47 @@
 import sqlite3
 
+'''
+ DB Manager class. The database used has one table:
+   - Patients, with several fields:
+       - patient_id (string, unique)
+       - name (string)
+       - birthday (string)
+       - gender (string)
+       - town (string)
+       - phone (string)
+       - pathologies (string)
+       - comments (string)
+       - dental_chart (string)
+       - is_synced (integer)
+       - last_modified (string)
 
-# DB Manager class. The database used has one table:
-#   - Patients, with several fields:
-#       - patient_id (string, unique)
-#       - name (string)
-#       - birthday (string)
-#       - gender (string)
-#       - town (string)
-#       - phone (string)
-#       - pathologies (string)
-#       - comments (string)
-#
-# It can be created with:
-#     CREATE TABLE "Patients" (
-#         "patient_id"	TEXT UNIQUE,
-#         "name"	TEXT,
-#         "birthday"	TEXT,
-#         "gender"	TEXT,
-#         "town"	TEXT,
-#         "phone"	TEXT,
-#         "pathologies"	TEXT,
-#         "comments"	TEXT,
-#         PRIMARY KEY("patient_id")
-#     );
-
+ It can be created with:
+     CREATE TABLE "Patients" (
+         "patient_id"	TEXT UNIQUE,
+         "name"	TEXT,
+         "birthday"	TEXT,
+         "gender"	TEXT,
+         "town"	TEXT,
+         "phone"	TEXT,
+         "pathologies"	TEXT,
+         "comments"	TEXT,
+         "dental_chart" TEXT,
+         "is_synced"    INTEGER,
+         "last_modified" TEXT,
+         PRIMARY KEY("patient_id")
+     );
+'''
 class DBManager:
     def __init__(self, path):
         self.path = path
         self.connection = sqlite3.connect(path)
         self.cursor = self.connection.cursor()
 
-    def new_patient(self, patient_id, name, birthday, gender, town, phone, pathologies, comments):
+    def new_patient(self, patient_id, name, birthday, gender, town, phone, pathologies, comments, dental_chart, last_modified):
         # self.cursor.execute("INSERT INTO Patients VALUES ('" + name + "','" + surname + "','" + birthday + "',
         # '" + str(db_id) + "')") DO NOT DO THIS! THIS IS INSECURE!
-        patient = (patient_id, name, birthday, gender, town, phone, pathologies, comments)
-        self.cursor.execute("INSERT INTO Patients VALUES (?,?,?,?,?,?,?,?)", patient)
+        patient = (patient_id, name, birthday, gender, town, phone, pathologies, comments, dental_chart, last_modified)
+        self.cursor.execute("INSERT INTO Patients VALUES (?,?,?,?,?,?,?,?,?,0,?)", patient)
         self.connection.commit()
 
     def search_patient_by_name(self, name):
@@ -62,9 +68,9 @@ class DBManager:
         #Return patient
         return self.cursor.fetchall() # List with 1 tuple
 
-    def update_patient_by_id(self, patient_id, name, birthday, gender, town, phone, pathologies, comments):
-        patient = (patient_id, name, birthday, gender, town, phone, pathologies, comments)
-        self.cursor.execute("REPLACE INTO Patients VALUES (?,?,?,?,?,?,?,?)", patient)
+    def update_patient_by_id(self, patient_id, name, birthday, gender, town, phone, pathologies, comments, dental_chart, last_modified):
+        patient = (patient_id, name, birthday, gender, town, phone, pathologies, comments, dental_chart, last_modified)
+        self.cursor.execute("REPLACE INTO Patients VALUES (?,?,?,?,?,?,?,?,?,0,?)", patient)
         self.connection.commit()
 
     def delete_record(self, patient_id):

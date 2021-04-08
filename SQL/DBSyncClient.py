@@ -1,2 +1,3 @@
 # DB Sync Client
-# Just send records.db to sync server
+# Send records.db to server
+# Ask for and receive updated records.db from server
