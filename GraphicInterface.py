@@ -121,11 +121,23 @@ class MedicalFormLayout(QWidget):
         
         # Title and size of the Main Window and Center it
         self.setWindowTitle("Medical Form")
-        #self.center()
+        self.center()
         
         # LOGICAL & INTERACTABLE ELEMENTS______________________________________
         # List of options to choose in the Patology field.
-        patology_list = ['a', 'b', 'c', 'd', 'e']
+        patology_list = ['Caries dental', 
+                         'Enfermedad de las encías', 
+                         'Cáncer oral', 
+                         'Úlceras bucales', 
+                         'Dolor de muela', 
+                         'Erosión dental',
+                         'Sensibilidad dental',
+                         'Traumatismos dentales',
+                         'Maloclusión',
+                         'Tinción dental',
+                         'Sarro dental'
+                         ]
+        
         gender_list = ['Male', 'Female', 'Others']
         #self.ErrorMessage = QLabel(self)
         self.PatientID = QLineEdit()
@@ -175,8 +187,8 @@ class MedicalFormLayout(QWidget):
         layout.addRow('Gender', self.Gender)
         layout.addRow('Address', self.Address)
         layout.addRow('Phone', self.Phone)
-        layout.addRow('Patology', self.Patology)
         layout.addRow('Dental Chart', self.dental_chart)
+        layout.addRow('Patology', self.Patology)
         layout.addRow('Comments', self.Comments)
         layout.addRow(self.save_button)
         layout.addRow(self.return_button)

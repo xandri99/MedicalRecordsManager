@@ -167,7 +167,7 @@ class MainWindow(QWidget):
         self.group.addButton(self.b32)
         
         a = QLabel('Top \n Left' , self )
-        b = QLabel('Bot \n Left' , self )         
+        b = QLabel('Bottom \n Left' , self )         
         
         # Layout
         layout = QHBoxLayout()
@@ -237,7 +237,7 @@ class MainWindow(QWidget):
     def check_button(self, radioButton):                                    # +++
         self._dictRB["rb"+radioButton.text()] = not self._dictRB["rb"+radioButton.text()]
         
-        print("clickеd button -> `{} - {}`".format(radioButton.text(), radioButton.isChecked()))        
+        #print("clickеd button -> `{} - {}`".format(radioButton.text(), radioButton.isChecked()))        
 
 
 
