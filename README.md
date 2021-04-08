@@ -8,6 +8,7 @@
 
     - [x] Graphic interface.
         - [ ] Fields must still be added according to the template provided.
+             - [ ] Solve problems of visualitzation of the patient data in the engine searcher.
     - [x] Saving the data locally.
         - [x] Saved in a .txt following the structure of a DataFrame.
         - [x] Checking if the patinent already exists or if it's a new patient.
