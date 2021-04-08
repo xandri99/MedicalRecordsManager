@@ -21,6 +21,7 @@
     - [ ] Glitches
         - [x] Allow closing the form without closing the program.
         - [ ] Resize the entire window without losing usability.
+        - [ ] Image size as a background.
 
 
 2. Start Menu.
