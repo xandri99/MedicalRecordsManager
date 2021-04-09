@@ -6,6 +6,9 @@
 import socket
 import tqdm
 import os
+from DBManager import DBManager
+from shutil import copyfile
+
 # device's IP address
 SERVER_HOST = "0.0.0.0"
 SERVER_PORT = 5001
@@ -16,10 +19,8 @@ SEPARATOR = "<SEPARATOR>"
 # create the server socket
 # TCP socket
 s = socket.socket()
-
 # bind the socket to our local address
 s.bind((SERVER_HOST, SERVER_PORT))
-
 # enabling our server to accept connections
 # 5 here is the number of unaccepted connections that
 # the system will allow before refusing new connections
@@ -30,7 +31,6 @@ print(f"[*] Listening as {SERVER_HOST}:{SERVER_PORT}")
 client_socket, address = s.accept()
 # if below code is executed, that means the sender is connected
 print(f"[+] {address} is connected.")
-
 # receive the file infos
 # receive using client socket, not server socket
 received = client_socket.recv(BUFFER_SIZE).decode()
@@ -60,3 +60,22 @@ with open(filename, "wb") as f:
 client_socket.close()
 # close the server socket
 s.close()
+
+
+# make changes to DB
+remote = DBManager("records.db")
+local = DBManager("local.db")
+
+# get unsynced changes
+new_records = remote.get_new_records()
+# add them to local db
+for r in new_records:
+    local.update_patients_by_record(r)
+# set them as synced
+local.sync_new_records()
+local.close()
+remote.close()
+# send new DB
+
+
+

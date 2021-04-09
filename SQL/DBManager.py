@@ -77,5 +77,22 @@ class DBManager:
         self.cursor.execute("DELETE FROM Patients WHERE patient_id = ?;", patient_id)
         self.connection.commit()
 
+    def sync_new_records(self):
+        operation = """
+        UPDATE Patients
+        SET is_synced = 1
+        WHERE is_synced = 0
+        """
+        self.cursor.executescript(operation)
+        self.connection.commit()
+
+    def get_new_records(self):
+        self.cursor.execute("SELECT * FROM Patients WHERE is_synced = 0")
+        return self.cursor.fetchall()
+
+    def update_patients_by_record(self, record):                    # DB SYNC USE ONLY
+        self.cursor.execute("REPLACE INTO Patients VALUES (?,?,?,?,?,?,?,?,?,?,?)", record)
+        self.connection.commit()
+
     def close(self):
         self.connection.close()

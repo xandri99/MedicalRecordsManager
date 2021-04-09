@@ -16,8 +16,6 @@
         - [x] Implement a way to update patient records. (It depends on how the database is implemented)
         - [x] Save it to a SQLite database.
             - [x] Merge between database and graphical interface done correctly --> V2.0
-
-
     - [ ] Glitches
         - [x] Allow closing the form without closing the program.
         - [ ] Resize the entire window without losing usability.
@@ -39,4 +37,6 @@
  
 4. Synchronization module
 
-    - [ ] To be defined.
+    - [ ] Send and receive DB.
+    - [ ] Have the server change unsynced records.
+    - [ ] Connect to GUI.
