@@ -37,6 +37,7 @@
  
 4. Synchronization module
 
-    - [ ] Send and receive DB.
-    - [ ] Have the server change unsynced records.
+    - [X] Push from client to server.
+        - [X] Merge new records into main DB.
+    - [ ] Pull from server to client.
     - [ ] Connect to GUI.
