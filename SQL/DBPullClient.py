@@ -48,5 +48,6 @@ with open(filename, "wb") as f:
 s.close()
 
 # replace DB
-copyfile("local.db", "records.db")
 os.remove("records.db")
+copyfile("local.db", "records.db")
+os.remove("local.db")
