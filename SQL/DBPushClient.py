@@ -1,8 +1,6 @@
-# DB Sync Client
+# DB Push Client
 # Send records.db to server
-# Ask for and receive updated records.db from server
 
-import socket
 import tqdm
 import os
 from shutil import copyfile
@@ -24,6 +22,11 @@ s = socket.socket()
 print(f"[+] Connecting to {host}:{port}")
 s.connect((host, port))
 print("[+] Connected.")
+
+# request push
+s.sendall("PUSH".encode())
+print("SERVER SAYS " + s.recv(1024).decode())
+
 # send the filename and filesize
 s.send(f"{filename}{SEPARATOR}{filesize}".encode())
 # start sending the file
@@ -42,9 +45,3 @@ with open(filename, "rb") as f:
         progress.update(len(bytes_read))
 # close the socket
 s.close()
-
-# receive new DB
-
-# replace DB
-#copyfile("local.db", "records.db")
-#os.remove("records.db")

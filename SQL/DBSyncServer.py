@@ -24,58 +24,81 @@ s.bind((SERVER_HOST, SERVER_PORT))
 # enabling our server to accept connections
 # 5 here is the number of unaccepted connections that
 # the system will allow before refusing new connections
-s.listen(5)
+s.listen(1)
 print(f"[*] Listening as {SERVER_HOST}:{SERVER_PORT}")
 
-# accept connection if there is any
-client_socket, address = s.accept()
-# if below code is executed, that means the sender is connected
-print(f"[+] {address} is connected.")
-# receive the file infos
-# receive using client socket, not server socket
-received = client_socket.recv(BUFFER_SIZE).decode()
-filename, filesize = received.split(SEPARATOR)
-# remove absolute path if there is
-filename = os.path.basename(filename)
-# convert to integer
-filesize = int(filesize)
+while 1:
+    # accept connection if there is any
+    client_socket, address = s.accept()
+    # if below code is executed, that means the sender is connected
+    print(f"[+] {address} is connected.")
 
-# start receiving the file from the socket
-# and writing to the file stream
-progress = tqdm.tqdm(range(filesize), f"Receiving {filename}", unit="B", unit_scale=True, unit_divisor=1024)
-with open(filename, "wb") as f:
-    while True:
-        # read 1024 bytes from the socket (receive)
-        bytes_read = client_socket.recv(BUFFER_SIZE)
-        if not bytes_read:
-            # nothing is received
-            # file transmitting is done
-            break
-        # write to the file the bytes we just received
-        f.write(bytes_read)
-        # update the progress bar
-        progress.update(len(bytes_read))
+    # receive message
+    mode = client_socket.recv(1024).decode()
+    print("CLIENT SAYS " + mode)
+    client_socket.sendall("OK".encode())
 
-# close the client socket
-client_socket.close()
-# close the server socket
+    if mode == "PUSH":
+        # receive the file infos
+        # receive using client socket, not server socket
+        received = client_socket.recv(BUFFER_SIZE).decode()
+        filename, filesize = received.split(SEPARATOR)
+        # remove absolute path if there is
+        filename = os.path.basename(filename)
+        # convert to integer
+        filesize = int(filesize)
+
+        # start receiving the file from the socket
+        # and writing to the file stream
+        progress = tqdm.tqdm(range(filesize), f"Receiving {filename}", unit="B", unit_scale=True, unit_divisor=1024)
+        with open(filename, "wb") as f:
+            while True:
+                # read 1024 bytes from the socket (receive)
+                bytes_read = client_socket.recv(BUFFER_SIZE)
+                if not bytes_read:
+                    # nothing is received
+                    # file transmitting is done
+                    break
+                # write to the file the bytes we just received
+                f.write(bytes_read)
+                # update the progress bar
+                progress.update(len(bytes_read))
+
+
+        # make changes to DB
+        remote = DBManager("records.db")
+        local = DBManager("local.db")
+
+        # get unsynced changes
+        new_records = remote.get_new_records()
+        # add them to local db
+        for r in new_records:
+            local.update_patients_by_record(r)
+        # set them as synced
+        local.sync_new_records()
+        local.close()
+        remote.close()
+
+    # send new DB
+    elif mode == "PULL":
+        filename = "local.db"
+        filesize = os.path.getsize(filename)
+        # send the filename and filesize
+        client_socket.send(f"{filename}{SEPARATOR}{filesize}".encode())
+        # start sending the file
+        progress = tqdm.tqdm(range(filesize), f"Sending {filename}", unit="B", unit_scale=True, unit_divisor=1024)
+        with open(filename, "rb") as f:
+            while True:
+                # read the bytes from the file
+                bytes_read = f.read(BUFFER_SIZE)
+                if not bytes_read:
+                    # file transmitting is done
+                    break
+                # we use sendall to assure transmission in
+                # busy networks
+                client_socket.sendall(bytes_read)
+                # update the progress bar
+                progress.update(len(bytes_read))
+        client_socket.close()
+# close the socket
 s.close()
-
-
-# make changes to DB
-remote = DBManager("records.db")
-local = DBManager("local.db")
-
-# get unsynced changes
-new_records = remote.get_new_records()
-# add them to local db
-for r in new_records:
-    local.update_patients_by_record(r)
-# set them as synced
-local.sync_new_records()
-local.close()
-remote.close()
-# send new DB
-
-
-
