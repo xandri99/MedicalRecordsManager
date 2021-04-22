@@ -39,5 +39,6 @@
 
     - [X] Push from client to server.
         - [X] Merge new records into main DB.
-    - [ ] Pull from server to client.
+    - [X] Pull from server to client.
+    - [ ] Exception handling.
     - [ ] Connect to GUI.
