@@ -65,7 +65,7 @@ while 1:
                 progress.update(len(bytes_read))
 
         bufferSize = 64 * 1024
-        password = "eva-vidal-no-nos-mates"
+        password = "vaQHNUUvxNrOXVoraeYyjwpHEwpSgUgqTxADSq5jCLG6jhwwsJ9CXZwbBOBDGi8hub2a8z7gRgaEpnxyGszMJZfQqK8SHhVF6Q48hnn2jjeAgLsQo5hMErbj1rEXL4cO"
         pyAesCrypt.decryptFile("records.db.aes", "records.db", password, bufferSize)
 
         # make changes to DB
@@ -85,7 +85,7 @@ while 1:
     # send new DB
     elif mode == "PULL":
         bufferSize = 64 * 1024
-        password = "eva-vidal-no-nos-mates"
+        password = "vaQHNUUvxNrOXVoraeYyjwpHEwpSgUgqTxADSq5jCLG6jhwwsJ9CXZwbBOBDGi8hub2a8z7gRgaEpnxyGszMJZfQqK8SHhVF6Q48hnn2jjeAgLsQo5hMErbj1rEXL4cO"
         # encrypt
         pyAesCrypt.encryptFile("local.db", "local.db.aes", password, bufferSize)
         filename = "local.db.aes"

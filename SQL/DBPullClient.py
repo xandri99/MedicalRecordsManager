@@ -48,10 +48,11 @@ with open(filename, "wb") as f:
 s.close()
 
 bufferSize = 64 * 1024
-password = "eva-vidal-no-nos-mates"
+password = "vaQHNUUvxNrOXVoraeYyjwpHEwpSgUgqTxADSq5jCLG6jhwwsJ9CXZwbBOBDGi8hub2a8z7gRgaEpnxyGszMJZfQqK8SHhVF6Q48hnn2jjeAgLsQo5hMErbj1rEXL4cO"
 pyAesCrypt.decryptFile("local.db.aes", "local.db", password, bufferSize)
 
 # replace DB
 os.remove("records.db")
+os.remove("local.db.aes")
 copyfile("local.db", "records.db")
 os.remove("local.db")

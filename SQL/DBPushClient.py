@@ -14,7 +14,7 @@ host = "127.0.0.1"
 port = 5001
 
 bufferSize = 64 * 1024
-password = "eva-vidal-no-nos-mates"
+password = "vaQHNUUvxNrOXVoraeYyjwpHEwpSgUgqTxADSq5jCLG6jhwwsJ9CXZwbBOBDGi8hub2a8z7gRgaEpnxyGszMJZfQqK8SHhVF6Q48hnn2jjeAgLsQo5hMErbj1rEXL4cO"
 # encrypt
 pyAesCrypt.encryptFile("records.db", "records.db.aes", password, bufferSize)
 
@@ -43,7 +43,7 @@ with open(filename, "rb") as f:
         if not bytes_read:
             # file transmitting is done
             break
-        # we use sendall to assure transimission in
+        # we use sendall to assure transmission in
         # busy networks
         s.sendall(bytes_read)
         # update the progress bar
