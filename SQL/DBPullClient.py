@@ -47,6 +47,10 @@ with open(filename, "wb") as f:
         progress.update(len(bytes_read))
 s.close()
 
+bufferSize = 64 * 1024
+password = "eva-vidal-no-nos-mates"
+pyAesCrypt.decryptFile("local.db.aes", "local.db", password, bufferSize)
+
 # replace DB
 os.remove("records.db")
 copyfile("local.db", "records.db")

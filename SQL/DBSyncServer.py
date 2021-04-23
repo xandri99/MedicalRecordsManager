@@ -7,7 +7,7 @@ import socket
 import tqdm
 import os
 from DBManager import DBManager
-from shutil import copyfile
+import pyAesCrypt
 
 # device's IP address
 SERVER_HOST = "0.0.0.0"
@@ -64,6 +64,9 @@ while 1:
                 # update the progress bar
                 progress.update(len(bytes_read))
 
+        bufferSize = 64 * 1024
+        password = "eva-vidal-no-nos-mates"
+        pyAesCrypt.decryptFile("records.db.aes", "records.db", password, bufferSize)
 
         # make changes to DB
         remote = DBManager("records.db")
@@ -81,7 +84,11 @@ while 1:
 
     # send new DB
     elif mode == "PULL":
-        filename = "local.db"
+        bufferSize = 64 * 1024
+        password = "eva-vidal-no-nos-mates"
+        # encrypt
+        pyAesCrypt.encryptFile("local.db", "local.db.aes", password, bufferSize)
+        filename = "local.db.aes"
         filesize = os.path.getsize(filename)
         # send the filename and filesize
         client_socket.send(f"{filename}{SEPARATOR}{filesize}".encode())

@@ -3,18 +3,23 @@
 
 import tqdm
 import os
-from shutil import copyfile
-from DBManager import DBManager
 import socket                   # Import socket module
+import pyAesCrypt
 
 SEPARATOR = "<SEPARATOR>"
-BUFFER_SIZE = 4096 # send 4096 bytes each time step
+BUFFER_SIZE = 4096              # send 4096 bytes each time step
 # the ip address or hostname of the server, the receiver
 host = "127.0.0.1"
 # the port, let's use 5001
 port = 5001
+
+bufferSize = 64 * 1024
+password = "eva-vidal-no-nos-mates"
+# encrypt
+pyAesCrypt.encryptFile("records.db", "records.db.aes", password, bufferSize)
+
 # the name of file we want to send, make sure it exists
-filename = "records.db"
+filename = "records.db.aes"
 # get the file size
 filesize = os.path.getsize(filename)
 # create the client socket
