@@ -1,7 +1,7 @@
+import pyAesCrypt
 import tqdm
 import os
 from shutil import copyfile
-from DBManager import DBManager
 import socket
 
 # receive new DB

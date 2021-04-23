@@ -67,6 +67,7 @@ while 1:
         bufferSize = 64 * 1024
         password = "vaQHNUUvxNrOXVoraeYyjwpHEwpSgUgqTxADSq5jCLG6jhwwsJ9CXZwbBOBDGi8hub2a8z7gRgaEpnxyGszMJZfQqK8SHhVF6Q48hnn2jjeAgLsQo5hMErbj1rEXL4cO"
         pyAesCrypt.decryptFile("records.db.aes", "records.db", password, bufferSize)
+        os.remove("records.db.aes")
 
         # make changes to DB
         remote = DBManager("records.db")
@@ -107,5 +108,6 @@ while 1:
                 # update the progress bar
                 progress.update(len(bytes_read))
         client_socket.close()
+        os.remove("local.db.aes")
 # close the socket
 s.close()
