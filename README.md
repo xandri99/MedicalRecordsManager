@@ -42,4 +42,4 @@
     - [X] Pull from server to client.
     - [X] Data encryption
     - [x] Exception handling.
-    - [ ] Connect to GUI.
+    - [x] Connect to GUI.
