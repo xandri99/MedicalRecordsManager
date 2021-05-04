@@ -1,7 +1,7 @@
 import sqlite3
 
 '''
- DB Manager class. The database used has one table:
+ DB Manager class. The database used has two tables:
    - Patients, with several fields:
        - patient_id (string, unique)
        - name (string)
@@ -15,6 +15,12 @@ import sqlite3
        - is_synced (integer)
        - last_modified (string)
 
+    - Material:
+        - timestamp (string, unique)
+        - category (string)
+        - quantity (integer)
+        - is_synced (integer)
+        
  It can be created with:
      CREATE TABLE "Patients" (
          "patient_id"	TEXT UNIQUE,
@@ -30,6 +36,8 @@ import sqlite3
          "last_modified" TEXT,
          PRIMARY KEY("patient_id")
      );
+     
+     
 '''
 class DBManager:
     def __init__(self, path):
@@ -73,6 +81,10 @@ class DBManager:
         self.cursor.execute("REPLACE INTO Patients VALUES (?,?,?,?,?,?,?,?,?,0,?)", patient)
         self.connection.commit()
 
+    def update_material(self, timestamp, category, quantity):
+        expense = (timestamp, category, quantity)
+        self.cursor.execute("REPLACE INTO Materials VALUES (?,?,?,0)", expense)
+
     def delete_record(self, patient_id):
         self.cursor.execute("DELETE FROM Patients WHERE patient_id = ?;", patient_id)
         self.connection.commit()
@@ -86,13 +98,30 @@ class DBManager:
         self.cursor.executescript(operation)
         self.connection.commit()
 
+    def sync_new_material(self):
+        operation = """
+        UPDATE Materials
+        SET is_synced = 1
+        WHERE is_synced = 0
+        """
+        self.cursor.executescript(operation)
+        self.connection.commit()
+
+
     def get_new_records(self):
         self.cursor.execute("SELECT * FROM Patients WHERE is_synced = 0")
+        return self.cursor.fetchall()
+
+    def get_new_used_material(self):
+        self.cursor.execute("SELECT * FROM Materials WHERE is_synced = 0")
         return self.cursor.fetchall()
 
     def update_patients_by_record(self, record):                    # DB SYNC USE ONLY
         self.cursor.execute("REPLACE INTO Patients VALUES (?,?,?,?,?,?,?,?,?,?,?)", record)
         self.connection.commit()
+
+    def add_new_material_expense(self, timestamp, category, expense):
+        self.cursor.execute("INSERT INTO Materials VALUES (?,?,?,0)", timestamp, category, quantity)
 
     def close(self):
         self.connection.close()

@@ -75,11 +75,18 @@ while 1:
 
         # get unsynced changes
         new_records = remote.get_new_records()
+        new_materials = remote.get_new_used_material()
+
         # add them to local db
         for r in new_records:
             local.update_patients_by_record(r)
+
+        for m in new_materials:
+            local.update_material(m)
+
         # set them as synced
         local.sync_new_records()
+        local.sync_new_material()
         local.close()
         remote.close()
 
