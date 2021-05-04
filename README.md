@@ -18,8 +18,8 @@
             - [x] Merge between database and graphical interface done correctly --> V2.0
     - [ ] Glitches
         - [x] Allow closing the form without closing the program.
-        - [ ] Resize the entire window without losing usability.
-        - [ ] Image size as a background.
+        - [x] Resize the entire window without losing usability.
+        - [x] Image size as a background.
 
 
 2. Start Menu.
@@ -41,5 +41,5 @@
         - [X] Merge new records into main DB.
     - [X] Pull from server to client.
     - [X] Data encryption
-    - [ ] Exception handling.
-    - [ ] Connect to GUI.
+    - [x] Exception handling.
+    - [x] Connect to GUI.
