@@ -550,14 +550,8 @@ class Modal(QDialog):
                 a += 'f'
             else:
                 a += 'v'
-        
         #print(a)
-        
-        
         parent.dentalString.setText(a)
-
-
-
         #print(self.teeth_String)
         
     
@@ -578,6 +572,9 @@ class SearchingEngineLayout(QMainWindow):
 
     def __init__(self):
         super().__init__()
+        
+        self.setWindowTitle("Searching Engine")
+        self.resize(1150, 750)
 
         self.controls = QWidget()  # Controls container widget.
         self.controlsLayout = QVBoxLayout()   # Controls container layout.
@@ -750,10 +747,6 @@ class SearchResult(QWidget):
                     afected_teeth = afected_teeth + '\n\t\t\t\t' + name
                 
         
-        
-        
-        
-        
         formated_record = ("Patient ID: \t\t" + self.patient[0][0] + "\n" + 
                             "Full Name: \t\t" +  self.patient[0][1] + "\n" + 
                             "Birthday: \t\t\t" + self.patient[0][2] + "\n" + 
@@ -785,6 +778,8 @@ class StatisticsLayout(QWidget):
 
         chart = Canvas(self)
         
+        
+        
 class ServerSynchronizationLayout(QWidget):
 
     def __init__(self):
@@ -815,18 +810,23 @@ class ServerSynchronizationLayout(QWidget):
         
         
     def serverPush(self):
-        os.chdir("Data/") #Tema directorios, preguntar script Xandri
+        DataSaverModule.moveToMainDirectory()
+        DataSaverModule.moveToDirectory(ref.directory)
+        
         file = open(r"DBPushClient.py") 
         exec(file.read()) 
         file.close()
         os.chdir("..")
         
     def serverPull(self):
-        os.chdir("Data/") #Tema directorios, preguntar script Xandri
+        DataSaverModule.moveToMainDirectory()
+        DataSaverModule.moveToDirectory(ref.directory)
+        
         file = open(r"DBPullClient.py") 
         exec(file.read()) 
         file.close()
         os.chdir("..")
+        
         
     def center(self):
         # geometry of the main window
@@ -883,9 +883,9 @@ class LayoutManager():
     
     def launchServerSynchronizationLayout(self):
         
-        self.w4 = ServerSynchronizationLayout()
-        self.w4.show()
-        self.w4.return_button.clicked.connect(self.w1.show)
+        self.w5 = ServerSynchronizationLayout()
+        self.w5.show()
+        self.w5.return_button.clicked.connect(self.w1.show)
         
 
 
