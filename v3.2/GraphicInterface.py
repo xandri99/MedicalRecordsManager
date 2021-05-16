@@ -797,7 +797,6 @@ class SearchEngineController():
         print('updated')
 
 
-
 class StatisticsLayout(QMainWindow):
 
     def __init__(self, *args, **kwargs):
@@ -819,20 +818,75 @@ class StatisticsLayout(QMainWindow):
         # MANUEL - SANTI
         
         # este deberia ser una lista tal que: [usuarios_enero,usuarios_febrero, ... ]
-        patients_per_month = pd.DataFrame([25, 36, 30, 0, 12, 56, 3, 34, 45, 56, 0, 9], columns=["Nº Patients"])
+
+        # Open DB
+        db = DBM.DBManager(ref.filename_sql)
+
+        # Get a list with all the timestamps
+        timestamps = db.get_patient_timestamps()
+
+        # Organize visits by month
+        visits = [0] * 12
+        for v in timestamps:
+            date = datetime.strptime(v, '%Y-%m-%d %H:%M:%S.%f')
+            visits[date.month - 1] += 1
+
+        patients_per_month = pd.DataFrame(visits, columns=["Nº Patients"])
         
         
         # este deberia ser una lista tal que: [Nº unidades usadas de material 1, Nº unidades usadas de material 2, .... ]
-        inventory = pd.DataFrame([12, 25 ,14 ,19], columns=["Nº items"])
-        
-        
-        # este deberia ser un grafico circular indicando 
-        patologies = pd.DataFrame({'mass': [0.330, 4.87 , 5.97],
-                                   'radius': [2439.7, 6051.8, 6378.1]},
-                                    index = ['Caries dental', 
-                                             'Sarro dental', 
+        materials = db.get_used_material()
+        counts = [0] * 4
+        for m in materials:
+            if m[1] == "Gasas":
+                counts[0] = counts[0] + m[2]
+            elif m[1] == "Anestesia":
+                counts[1] = counts[1] + m[2]
+            elif m[1] == "Gomas":
+                counts[2] = counts[2] + m[2]
+            elif m[1] == "Brackets":
+                counts[3] = counts[3] + m[2]
+
+        inventory = pd.DataFrame(counts, columns=["Nº items"])
+
+        conditions = db.get_all_conditions()
+        counts = [0] * 10
+
+        for c in conditions:
+            if c[0] == "Caries dental":
+                counts[0] += 1
+            elif c[0] == "Enfermedad de las encías":
+                counts[1] += 1
+            elif c[0] == "Cáncer oral":
+                counts[2] += 1
+            elif c[0] == "Úlceras bucales":
+                counts[3] += 1
+            elif c[0] == "Dolor de muela":
+                counts[4] += 1
+            elif c[0] == "Erosión dental":
+                counts[5] += 1
+            elif c[0] == "Sensibilidad dental":
+                counts[6] += 1
+            elif c[0] == "Traumatismos dentales":
+                counts[7] += 1
+            elif c[0] == "Maloclousión":
+                counts[8] += 1
+            elif c[0] == "Tinción dental":
+                counts[9] += 1
+
+        # este deberia ser un grafico circular indicando
+        patologies = pd.DataFrame({'mass': counts,
+                                   'radius': counts},
+                                    index = ['Caries dental',
+                                             'Enfermedad de las encías',
                                              'Cáncer oral',
-                                            ])
+                                             'Úlceras bucales',
+                                             'Dolor de muela',
+                                             'Erosión dental',
+                                             'Sensibilidad dental',
+                                             'Traumatismos dentales',
+                                             'Maloclousión',
+                                             'Tinción dental'])
         
         
         # plot the pandas DataFrame, passing in the

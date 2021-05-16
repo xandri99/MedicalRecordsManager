@@ -120,7 +120,15 @@ class DBManager:
         self.cursor.execute("REPLACE INTO Patients VALUES (?,?,?,?,?,?,?,?,?,?,?)", record)
         self.connection.commit()
 
-    def add_new_material_expense(self, timestamp, category, expense):
+    def get_patient_timestamps(self):
+        self.cursor.execute("SELECT last_modified FROM Patients")
+        p_list = self.cursor.fetchall()
+        names = []
+        for p in p_list:
+            names.append(p[0])
+        return names  # List of strings
+
+    def add_new_material_expense(self, timestamp, category, quantity):
         self.cursor.execute("INSERT INTO Materials VALUES (?,?,?,0)", timestamp, category, quantity)
 
     def close(self):

@@ -90,9 +90,16 @@ class DBManager:
         self.cursor.execute("SELECT * FROM Patients WHERE is_synced = 0")
         return self.cursor.fetchall()
 
+    def get_patient_timestamps(self):
+        self.cursor.execute("SELECT timestamp FROM Patients")
+        a = self.cursor.fetchall()
+        print(a)
+        return a
+
     def update_patients_by_record(self, record):                    # DB SYNC USE ONLY
         self.cursor.execute("REPLACE INTO Patients VALUES (?,?,?,?,?,?,?,?,?,?,?)", record)
         self.connection.commit()
 
     def close(self):
         self.connection.close()
+
