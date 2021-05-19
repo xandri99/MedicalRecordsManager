@@ -81,9 +81,8 @@ class DBManager:
         self.cursor.execute("REPLACE INTO Patients VALUES (?,?,?,?,?,?,?,?,?,0,?)", patient)
         self.connection.commit()
 
-    def update_material(self, timestamp, category, quantity):
-        expense = (timestamp, category, quantity)
-        self.cursor.execute("REPLACE INTO Materials VALUES (?,?,?,0)", expense)
+    def update_material(self, material):
+        self.cursor.execute("REPLACE INTO Materials VALUES (?,?,?,?)", material)
 
     def delete_record(self, patient_id):
         self.cursor.execute("DELETE FROM Patients WHERE patient_id = ?;", patient_id)

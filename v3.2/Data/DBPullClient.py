@@ -7,10 +7,14 @@ import socket
 # receive new DB
 SEPARATOR = "<SEPARATOR>"
 BUFFER_SIZE = 4096 # send 4096 bytes each time step
-# the ip address or hostname of the server, the receiver
-host = "127.0.0.1"
-# the port, let's use 5001
-port = 5001
+f1 = open("server.txt", "r")
+host = f1.readline().rstrip()
+f1.close()
+
+f2 = open("port.txt", "r")
+port = int(f2.readline())
+f2.close()
+
 # create the client socket
 s = socket.socket()
 print(f"[+] Connecting to {host}:{port}")
