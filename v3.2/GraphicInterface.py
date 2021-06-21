@@ -708,10 +708,10 @@ class SearchResult(QWidget):
         self.hbox = QHBoxLayout()
         self.hbox.addWidget(self.content)
         self.hbox.addWidget(self.show_more_btn)
-        self.hbox.addWidget(self.edit_patient_btn)
+        #self.hbox.addWidget(self.edit_patient_btn)
 
         self.show_more_btn.clicked.connect(self.readFullRecord)
-        self.edit_patient_btn.clicked.connect(self.editPatientRecord)
+        #self.edit_patient_btn.clicked.connect(self.editPatientRecord)
 
         self.setLayout(self.hbox)
 
